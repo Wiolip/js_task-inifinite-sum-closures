@@ -7,21 +7,20 @@ function makeInfinityAdder() {
   let sum = 0;
 
   return function adder(...args) {
-    // If called with no arguments: return sum and reset
+    let sum = 0;
+
+  return function adder(...args) {
+    // If no arguments are passed, return the current sum and reset it
     if (args.length === 0) {
       const result = sum;
-
       sum = 0;
-
       return result;
     }
 
-    // Sum all arguments passed in this specific call
-    const currentBatch = args.reduce((acc, val) => acc + val, 0);
+    // Add all arguments from the current call to the total sum
+    sum += args.reduce((acc, val) => acc + val, 0);
 
-    sum += currentBatch;
-
-    // Return the function itself to allow further chaining
+    // Return the function itself to allow for infinite chaining
     return adder;
   };
 }
